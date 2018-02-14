@@ -12,6 +12,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 
 @Configuration
@@ -33,9 +35,9 @@ public class WebConfiguration {
      */
     @Bean
     RouterFunction<?> routes() {
-//        List<Employee> employeeList = List.of(new Employee(0, "ListEmployee0"),
-//                                              new Employee(1, "ListEmployee1"),
-//                                              new Employee(2, "ListEmployee2"));
+        List<Employee> employeeList = List.of(new Employee(0, "ListEmployee0"),
+                                              new Employee(1, "ListEmployee1"),
+                                              new Employee(2, "ListEmployee2"));
 
         final RouterFunction<ServerResponse> route = RouterFunctions
                 .route(GET("/employees"),
@@ -44,6 +46,7 @@ public class WebConfiguration {
                                        .ok()
                                        .body(Flux.range(1, 10)
                                                  .map(i -> new Employee(i, "EmployeeNr" + i))
+                                                 .mergeWith(Flux.fromIterable(employeeList))
                                                , Employee.class))
                 .andRoute(GET("/gfunction/{name}"),
                           serverRequest -> {
