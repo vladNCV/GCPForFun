@@ -1,0 +1,14 @@
+resources:
+  - type: storage.v1.bucket
+    name: sls-gcf-nodejs-dev-1518211126786
+  - type: cloudfunctions.v1beta2.function
+    name: gcf-nodejs-dev-first
+    properties:
+      location: us-central1
+      availableMemoryMb: 256
+      timeout: 60s
+      function: helloWorld
+      sourceArchiveUrl: >-
+        gs://sls-gcf-nodejs-dev-1518211126786/serverless/gcf-nodejs/dev/1518213846372-2018-02-09T22:04:06.372Z/gcf-nodejs.zip
+      httpsTrigger:
+        url: path

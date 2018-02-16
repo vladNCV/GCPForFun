@@ -1,0 +1,3 @@
+resources:
+  - type: storage.v1.bucket
+    name: sls-gcf-nodejs-dev-1518211126786

@@ -1,7 +1,7 @@
 steps:
-- name: 'gcr.io/cloud-builders/mvn'
+- name: 'gcr.io/$PROJECT_ID/mvn-with-java-9'
   args: ['package','-f','./CloudConfigServer']
-- name: 'gcr.io/cloud-builders/mvn'
+- name: 'gcr.io/$PROJECT_ID/mvn-with-java-9'
   args: ['package','-f','./WorkerInstance']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/CloudConfigServerImg', './CloudConfigServer' ]

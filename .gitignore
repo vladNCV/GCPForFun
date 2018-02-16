@@ -23,3 +23,4 @@ dist/
 nbdist/
 .nb-gradle/
 CloudConfigServer/src/main/resources/
+/GCPFunction/.gcloud/

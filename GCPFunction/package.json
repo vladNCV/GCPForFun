@@ -1,0 +1,20 @@
+{
+  "name": "google-nodejs",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "serverless.com",
+  "license": "MIT",
+  "dependencies": {
+    "@types/gapi.client.cloudfunctions": "^1.0.0",
+    "json2typescript": "^1.0.5",
+    "serverless-google-cloudfunctions": "^1.1.1"
+  },
+  "description": "",
+  "devDependencies": {
+    "serverless-offline": "^3.17.0",
+    "serverless-plugin-typescript": "^1.1.5"
+  }
+}
