@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    org.springframework.data.gclouddatastore.repository.configuration.GcloudDatastoreAutoConfiguration
+org.springframework.data.repository.core.support.RepositoryFactorySupport=\
+    org.springframework.data.gclouddatastore.repository.GcloudDatastoreRepositoryFactory

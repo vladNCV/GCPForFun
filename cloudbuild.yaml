@@ -1,12 +1,10 @@
 steps:
 - name: 'gcr.io/$PROJECT_ID/mvn-with-java-9'
-  args: ['package','-f','./CloudConfigServer']
-- name: 'gcr.io/$PROJECT_ID/mvn-with-java-9'
-  args: ['package','-f','./WorkerInstance']
+  args: ['package','-f','.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/CloudConfigServerImg', './CloudConfigServer' ]
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/worker-instance-frontend-img', './worker-instance-frontend' ]
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/WorkerInstanceImg', './WorkerInstance' ]
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/worker-instance-backend-img', './worker-instance-backend' ]
 images:
-- 'gcr.io/$PROJECT_ID/CloudConfigServerImg'
-- 'gcr.io/$PROJECT_ID/WorkerInstanceImg'
+- 'gcr.io/$PROJECT_ID/worker-instance-frontend-img'
+- 'gcr.io/$PROJECT_ID/worker-instance-backend-img'
