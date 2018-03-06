@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.workerinstanceinterface;
+package com.vndemo.worker.instance.contract;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.hateoas.ResourceSupport;
@@ -30,6 +31,7 @@ import org.springframework.hateoas.ResourceSupport;
  * @since 0.0.1
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Employee extends ResourceSupport {
@@ -42,6 +44,7 @@ public class Employee extends ResourceSupport {
   private Collection<WorkPosition> workPositions;
 
   @Data
+  @EqualsAndHashCode(callSuper = false)
   @AllArgsConstructor
   @NoArgsConstructor
   public static class EmployeeDetails extends ResourceSupport {
@@ -51,6 +54,7 @@ public class Employee extends ResourceSupport {
   }
 
   @Data
+  @EqualsAndHashCode(callSuper = false)
   @AllArgsConstructor
   @NoArgsConstructor
   public static class WorkPosition extends ResourceSupport {

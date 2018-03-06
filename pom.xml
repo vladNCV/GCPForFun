@@ -10,8 +10,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>CloudConfigServer</module>
-    <module>worker-instance-interface</module>
+    <module>worker-instance-contract</module>
     <module>worker-instance-frontend</module>
     <module>spring-data-gclouddatastore</module>
     <module>worker-instance-backend</module>

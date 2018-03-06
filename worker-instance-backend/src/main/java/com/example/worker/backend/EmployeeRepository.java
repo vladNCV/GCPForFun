@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
+package com.example.worker.backend;
+
+
+import com.vndemo.worker.instance.contract.Employee;
+import org.springframework.data.gclouddatastore.repository.GcloudDatastoreRepository;
+
 /**
  * @author Vlad Nicoara
  * @since 0.0.1
  */
-//TODO: Re-enable module config after lombok is fixed. (Chose lombok over modules since we weren't benefiting much from them.)
-module demo {
-    requires slf4j.api;
-    requires spring.boot;
-    requires spring.boot.autoconfigure;
-    requires spring.context;
-    requires spring.webflux;
-    requires reactor.core;
-    requires spring.web;
-    requires static lombok;
+interface EmployeeRepository extends GcloudDatastoreRepository<Employee, Long> {
+
 }

@@ -1,6 +1,6 @@
-package com.example.workerinstanceinterface;
+package com.vndemo.worker.instance.contract;
 
-import com.example.workerinstanceinterface.Employee.EmployeeDetails;
+import com.vndemo.worker.instance.contract.Employee.EmployeeDetails;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author Vlad Nicoara
  * @since 0.0.1
+ *
+ * PathVariable names are required for netflix-feign reflection.
  */
 @RequestMapping("/employee/crud")
 public interface EmployeeCrudRest {
@@ -19,8 +21,8 @@ public interface EmployeeCrudRest {
   void save(@RequestBody Employee employee);
 
   @GetMapping("/Employee/{id}")
-  HttpEntity<Employee> findEmployeeById(@PathVariable Long id);
+  HttpEntity<Employee> findEmployeeById(@PathVariable("id") Long id);
 
   @GetMapping("/EmployeeDetails/{id}")
-  HttpEntity<EmployeeDetails> findEmployeeDetailsById(@PathVariable Long id);
+  HttpEntity<EmployeeDetails> findEmployeeDetailsById(@PathVariable("id") Long id);
 }

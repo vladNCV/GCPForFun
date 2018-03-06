@@ -20,11 +20,14 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import com.google.cloud.datastore.PathElement;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +35,15 @@ import org.springframework.data.gclouddatastore.repository.configuration.EnableG
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+@Ignore
+//TODO: mock gcp datastore
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = GcloudDatastoreTestConfiguration.class)
 @EnableGcloudDatastoreRepositories
 public class SimpleGcloudDatastoreRepositoryTests {
 
   @Autowired
+  @SuppressWarnings("SpringJavaAutowiringInspection")
   PersonRepository personRepository;
 
   @Test
@@ -271,7 +277,9 @@ public class SimpleGcloudDatastoreRepositoryTests {
       this.personRepository.saveAll(List.of(new Person(123), new Person(456)));
 
       // Exercise, Verify
-      assertEquals(new Person(123), this.personRepository.findFirstById(123L).get());
+      final Optional<Person> firstById = this.personRepository.findFirstById(123L);
+      assertTrue(firstById.isPresent());
+      assertEquals(new Person(123), firstById.get());
     }
   }
 

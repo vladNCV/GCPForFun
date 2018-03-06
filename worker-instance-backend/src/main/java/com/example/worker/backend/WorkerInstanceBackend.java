@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
+package com.example.worker.backend;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * @author Vlad Nicoara
- * @since 2/22/2018 TODO: Replace date with version number.
+ * @since 0.0.1
  */
-module spring.data.gclouddatastore {
-  requires google.cloud.datastore;
-  requires spring.data.commons;
-  requires spring.context;
-  requires spring.beans;
-  requires spring.core;
-  requires java.desktop;
-  requires google.cloud.core;
-  requires java.sql;
-  requires protobuf.java;
-  requires slf4j.api;
-  requires proto.google.common.protos;
-  requires spring.boot.autoconfigure;
-    requires spring.jcl;
+@SpringBootApplication
+public class WorkerInstanceBackend {
+
+  public static void main(String[] args) {
+    SpringApplication.run(WorkerInstanceBackend.class, args);
+  }
 }

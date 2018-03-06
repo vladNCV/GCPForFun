@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>worker-instance-backend</artifactId>
+  <artifactId>worker-instance-frontend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>worker-instance-backend</name>
-  <description>Worker instance to be deployed on google cloud.</description>
+  <name>worker-instance-frontend</name>
+  <description>Demo project for Spring Boot</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -25,33 +25,16 @@
     <java.version>9</java.version>
     <spring-cloud.version>Finchley.BUILD-SNAPSHOT</spring-cloud.version>
     <spring-cloud-kubernetes>0.2.0.RELEASE</spring-cloud-kubernetes>
-
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>com.google.cloud</groupId>
-        <artifactId>google-cloud-datastore</artifactId>
-        <version>1.16.0</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>24.0-jre</version>
-      </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
         <version>${spring-cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
-      </dependency>
-      <dependency>
-        <!--Needed to avoid repository autowiring issue when using java 9 modules.-->
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-context</artifactId>
-        <version>2.0.0.M7</version>
       </dependency>
       <dependency>
         <groupId>org.projectlombok</groupId>
@@ -64,14 +47,14 @@
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
-      <scope>provided</scope>
+      <scope>runtime</scope>
     </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -79,37 +62,13 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-kubernetes-netflix</artifactId>
-      <version>${spring-cloud-kubernetes}</version>
-    </dependency>
-
-    <!--<dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-kubernetes-zipkin</artifactId>
-      <version>${spring-cloud-kubernetes}</version>
-    </dependency>-->
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
-      <!--HAL object mapper doesn't work with spring webflux only with spring web therefore
-      hateoas entities will be marshaled with standard jackson object mapper (eq. "links" instead of
-       "_links", etc.). Attempt to fix this or wait for fix from spring-hateoas-->
-      <groupId>org.springframework.hateoas</groupId>
-      <artifactId>spring-hateoas</artifactId>
-    </dependency>
-    <dependency>
-      <!-- Required for spring-hateoas autoconfiguration. Remove when not needed anymore. -->
-      <groupId>org.springframework.plugin</groupId>
-      <artifactId>spring-plugin-core</artifactId>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-test</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -119,33 +78,17 @@
     </dependency>
 
     <dependency>
-      <groupId>yokohama.unit</groupId>
-      <artifactId>spring-data-gclouddatastore</artifactId>
-      <version>0.4.0</version>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-kubernetes-netflix</artifactId>
+      <version>${spring-cloud-kubernetes}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!--<dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-test</artifactId>
-      <scope>test</scope>
-    </dependency>-->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
+
 
   <build>
     <finalName>${artifactId}</finalName>
@@ -170,24 +113,6 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin
-        </artifactId> <!--Need to add surefire plugin to enable maven to test using junit5.-->
-        <version>2.19.1
-        </version> <!--Can't use newer version because of a junit5 compatibility issue.-->
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>1.0.3</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
     </plugins>
   </build>
 
@@ -206,14 +131,6 @@
       <url>https://repo.spring.io/milestone</url>
       <snapshots>
         <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>spring-libs-snapshots</id>
-      <name>Spring Libs Snapshots</name>
-      <url>https://repo.spring.io/libs-snapshot</url>
-      <snapshots>
-        <enabled>true</enabled>
       </snapshots>
     </repository>
     <repository>
@@ -244,5 +161,6 @@
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
+
 
 </project>

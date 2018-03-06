@@ -332,20 +332,22 @@ class Unmarshaller {
           if (targetType.isAssignableFrom(List.class)) {
             final TypeDescriptor propertyTypeDescriptor =
                 beanWrapper.getPropertyTypeDescriptor(name);
-            if (propertyTypeDescriptor != null) {
+            if (propertyTypeDescriptor != null
+                && propertyTypeDescriptor.getResolvableType().hasGenerics()
+                && propertyTypeDescriptor.getResolvableType().getGenerics().length == 1
+                && propertyTypeDescriptor.getResolvableType().getGenerics()[0].getRawClass()
+                != null) {
               final ResolvableType resolvableType = propertyTypeDescriptor.getResolvableType();
-              if (resolvableType.hasGenerics() && resolvableType.getGenerics().length == 1) {
-                final Class rawClass = resolvableType.getGenerics()[0].getRawClass();
-                try {
-                  beanWrapper.setPropertyValue(
-                      name, unmarshalCollectionWithGenerics(value, rawClass));
-                } catch (NoSuchMethodException
-                    | IllegalAccessException
-                    | InstantiationException
-                    | InvocationTargetException e) {
-                  log.error(e);
-                  beanWrapper.setPropertyValue(name, unmarshal(value, List.class));
-                }
+              final Class rawClass = resolvableType.getGenerics()[0].getRawClass();
+              try {
+                beanWrapper.setPropertyValue(
+                    name, unmarshalCollectionWithGenerics(value, rawClass));
+              } catch (NoSuchMethodException
+                  | IllegalAccessException
+                  | InstantiationException
+                  | InvocationTargetException e) {
+                log.error(e);
+                beanWrapper.setPropertyValue(name, unmarshal(value, List.class));
               }
             } else {
               beanWrapper.setPropertyValue(name, unmarshal(value, List.class));
